@@ -639,12 +639,12 @@ async function toggleCamera(){
     const video=document.getElementById("webcam-video");
     video.srcObject=webcamStream;video.style.display="block";
   // 전면 카메라일 때만 반전
-  const facingMode = webcamStream.getVideoTracks()[0].getSettings().facingMode;
-  if(facingMode === "user") {
-    video.style.transform = "scaleX(-1)";
-  } else {
-    video.style.transform = "scaleX(1)";
-  }
+    const facingMode = webcamStream.getVideoTracks()[0].getSettings().facingMode;
+    if(facingMode === "user") {
+      video.style.transform = "scaleX(-1)";
+    } else {
+      video.style.transform = "scaleX(1)";
+    }
     
     document.getElementById("placeholder").style.display="none";
     document.getElementById("preview-img").style.display="none";
