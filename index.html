@@ -54,7 +54,6 @@ body.theme-unknown .card{border-color:rgba(50,140,80,0.3)}
 .camera-zone{position:relative;width:100%;aspect-ratio:4/3;background:#050d1a;overflow:hidden}
 .camera-zone video,.camera-zone img{width:100%;height:100%;object-fit:cover;display:block}
 /* 좌우반전 */
-#webcam-video{transform:scaleX(-1);}
 .camera-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;color:var(--text-muted)}
 .icon-ring{width:80px;height:80px;border-radius:50%;border:1.5px dashed var(--text-muted);display:flex;align-items:center;justify-content:center;opacity:0.6}
 .icon-ring svg{width:32px;height:32px;stroke:var(--text-muted);fill:none}
@@ -639,6 +638,14 @@ async function toggleCamera(){
     webcamStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"},audio:false});
     const video=document.getElementById("webcam-video");
     video.srcObject=webcamStream;video.style.display="block";
+  // 전면 카메라일 때만 반전
+  const facingMode = webcamStream.getVideoTracks()[0].getSettings().facingMode;
+  if(facingMode === "user") {
+    video.style.transform = "scaleX(-1)";
+  } else {
+    video.style.transform = "scaleX(1)";
+  }
+    
     document.getElementById("placeholder").style.display="none";
     document.getElementById("preview-img").style.display="none";
     document.getElementById("live-badge").style.display="flex";
